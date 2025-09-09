@@ -1,0 +1,14 @@
+{
+  "multilogin": {
+    "username": "",
+    "password": "",
+    "folder_id": "362aeda2-30cb-452f-a581-0d5c4d73cd0f",
+    "profile_id": "362aeda2-30cb-452f-a581-0d5c4d73cd0f"
+  },
+  "scraping": {
+    "base_url": "https://www.commercialrealestate.com.au/for-sale/",
+    "output_csv": "sale.csv",
+    "page": 44,
+    "property_index": 16
+  }
+}
