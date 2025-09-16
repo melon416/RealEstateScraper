@@ -129,7 +129,7 @@ def get_property_links(driver, page_num):
     url = f"{BASE_URL}?pn={page_num}"
     print(f"Fetching: {url}")
     driver.get(url)
-    time.sleep(2)
+    time.sleep(6)
 
     elements = driver.find_elements(By.CSS_SELECTOR, "a.touchable.css-qbj577")
 
@@ -243,7 +243,7 @@ def normalize_text(value: str) -> str:
 
 def get_property_details(driver, url):
     driver.get(url)
-    time.sleep(2)
+    time.sleep(5)
 
     def safe_get(selector, attr=None):
         try:
@@ -256,20 +256,13 @@ def get_property_details(driver, url):
     floor_space = ""
     land_size = ""
     property_id = ""
-    try:
-        table_rows = driver.find_elements(By.CSS_SELECTOR, "div.sticky-container.css-n045cl table.css-5a1t3x tbody tr")
-        if len(table_rows) >= 1:
-            floor_space = table_rows[0].find_element(By.CSS_SELECTOR, "td").text.strip()
-        if len(table_rows) >= 2:
-            land_size = table_rows[1].find_element(By.CSS_SELECTOR, "td").text.strip()
-
-        
-    except:
-        pass
-
+   
     property_id = safe_get("div.sticky-container.css-n045cl table.css-5a1t3x tbody tr td[data-testid='highlights-row-value Property ID']")
     inspection_time = safe_get("div.sticky-container.css-n045cl table.css-5a1t3x tbody tr td[data-testid='last-updated']")
-    
+    floor_space = safe_get("div.sticky-container.css-n045cl table.css-5a1t3x tbody tr td[data-testid='highlights-row-value Floor Area']")
+    land_size = safe_get("div.sticky-container.css-n045cl table.css-5a1t3x tbody tr td[data-testid='highlights-row-value Land Area']")
+    if not land_size:
+        land_size = safe_get("div.sticky-container.css-n045cl table.css-5a1t3x tbody tr td[data-testid='highlights-row-value Land Area'] a")
     auction_data = ""
     try:
         first_tr = driver.find_element(By.CSS_SELECTOR, "tr[data-test-id='child-rows']")
@@ -464,7 +457,7 @@ def main():
                 
                 # Add pause between properties to avoid being detected as a bot
                 print("⏸️ Pausing before next property...")
-                time.sleep(random.uniform(3, 7))  # Random delay between 3-7 seconds
+                time.sleep(6)  # Random delay between 3-7 seconds
             
             # Reset property index for next page
             start_property_index = 0
